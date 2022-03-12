@@ -338,7 +338,7 @@ namespace _2048
         Vector2[,] ScreenPositions = new Vector2[4, 4];
         //This is where they are drawn
 
-        ColorsEnum colorsetter;
+        Dictionary<int, Color> ColorMap = new Dictionary<int, Color>();
 
         public Game1()
         {
@@ -445,7 +445,7 @@ namespace _2048
 
             //oh ye also can i work on this stuff at home using github
 
-            colorsetter = ColorsEnum.red;
+            
 
 
             // TODO: use this.Content to load your game content here
