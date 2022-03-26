@@ -39,6 +39,8 @@ namespace _2048
     {
 
 
+        SpriteFont font;
+
         public void MoveTile(Directions direction)
         {
             //Get movement working since gheneration is complete. 
@@ -101,7 +103,7 @@ namespace _2048
                     targetCell = TilesPositions.GetLength(0) - 1;
                     currentCell = TilesPositions.GetLength(0) - 2;
 
-                    for (int j = 0; j < TilesPositions.GetLength(1); j++)
+                    for (int j = 0; j < TilesPositions.GetLength(1) * 2; j++)
                     {
 
                         if (currentCell >= 0 && targetCell > 0)
@@ -142,6 +144,7 @@ namespace _2048
                         }
                     }
                 }
+                GenerateTiles();
             }
 
             if (direction == Directions.left)
@@ -151,7 +154,7 @@ namespace _2048
                 {
                     targetCell = 0;
                     currentCell = 1;
-                    for (int j = 0; j < TilesPositions.GetLength(0); j++)
+                    for (int j = 0; j < TilesPositions.GetLength(1) * 2; j++)
                     {
                         if (currentCell < 4 && targetCell < 3)
                         {
@@ -190,6 +193,7 @@ namespace _2048
                         }
                     }
                 }
+                GenerateTiles();
             }
 
             if (direction == Directions.up)
@@ -199,7 +203,7 @@ namespace _2048
                     targetCell = 0;
                     currentCell = 1;
 
-                    for (int j = 0; j < TilesPositions.GetLength(1); j++)
+                    for (int j = 0; j < TilesPositions.GetLength(1) * 2; j++)
                     {
                         if (currentCell < 4 && targetCell < 3)
                         {
@@ -238,6 +242,7 @@ namespace _2048
                         }
                     }
                 }
+                GenerateTiles();
             }
 
             if (direction == Directions.down)
@@ -247,7 +252,7 @@ namespace _2048
                     targetCell = TilesPositions.GetLength(1) - 1;
                     currentCell = TilesPositions.GetLength(1) - 2;
 
-                    for (int j = 0; j < TilesPositions.GetLength(1); j++)
+                    for (int j = 0; j < TilesPositions.GetLength(1) * 2; j++)
                     {
                         if (currentCell >= 0 && targetCell > 0)
                         {
@@ -287,6 +292,7 @@ namespace _2048
                         }
                     }
                 }
+                GenerateTiles();
             }
 
         }
@@ -298,7 +304,7 @@ namespace _2048
 
             if (TilesPositions[xCord, yCord] == null)
             {
-                TilesPositions[xCord, yCord] = new Tile(Vector2.Zero, squaretexture, new Vector2(sizeOfCell.X, sizeOfCell.Y), Color.Red, 2);
+                TilesPositions[xCord, yCord] = new Tile(Vector2.Zero, squaretexture, new Vector2(sizeOfCell.X, sizeOfCell.Y), Color.Red, 2, font);
             }
             else
             {
@@ -307,7 +313,7 @@ namespace _2048
                     xCord = rnd.Next(0, 4);
                     yCord = rnd.Next(0, 4);
                 }
-                TilesPositions[xCord, yCord] = new Tile(Vector2.Zero, squaretexture, new Vector2(sizeOfCell.X, sizeOfCell.Y), Color.Red, 2);
+                TilesPositions[xCord, yCord] = new Tile(Vector2.Zero, squaretexture, new Vector2(sizeOfCell.X, sizeOfCell.Y), Color.Red, 2, font);
             }
             //TilesPositions[2, 2] = new Tile(Vector2.Zero, squaretexture, new Vector2(sizeOfCell.X, sizeOfCell.Y), Color.Red, 2);
             //TilesPositions[3, 2] = new Tile(Vector2.Zero, squaretexture, new Vector2(sizeOfCell.X, sizeOfCell.Y), Color.Red, 2);
@@ -415,7 +421,11 @@ namespace _2048
 
             //SET THE COLORS ENUMS
 
+            //SET COLOR ENUMS AT HOME
 
+            
+
+            font = Content.Load<SpriteFont>("Font");
 
 
             Dictionary<Keys, Directions> keysToDirectionMap = new Dictionary<Keys, Directions>();
@@ -424,6 +434,11 @@ namespace _2048
             keysToDirectionMap.Add(Keys.Down, Directions.down);
             keysToDirectionMap.Add(Keys.Right, Directions.right);
             keysToDirectionMap.Add(Keys.Left, Directions.left);
+
+            ColorMap.Add(2, Color.DarkRed);
+            ColorMap.Add(4, Color.Red);
+            ColorMap.Add(8, new Color(110, 65, 65));
+            
 
             GenerateGrid(gapWidth, sizeOfCell.X);
 
