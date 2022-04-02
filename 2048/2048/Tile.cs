@@ -21,6 +21,12 @@ namespace _2048
 
         SpriteFont font;
 
+        public Vector2 StartingPosition { get; set; }
+
+        public double HowFarAlongTheLerpYouAre { get; set; } = 1;
+
+        double step = .11;
+
         public Tile(Vector2 position, Texture2D texture, Vector2 size, Color color, int cellvalue, SpriteFont font)
             : base(position, texture, size, color)
         {
@@ -30,8 +36,16 @@ namespace _2048
 
         public void Update(GameTime gameTime)
         {
-            if (TargetPosition == Position)
-
+            HowFarAlongTheLerpYouAre += step;
+            if (HowFarAlongTheLerpYouAre <= 1)
+            {
+                Position = Vector2.Lerp(StartingPosition, TargetPosition, (float)HowFarAlongTheLerpYouAre);
+            }
+            else
+            {
+                Position = TargetPosition;
+            }
+                
 
                 return;
 

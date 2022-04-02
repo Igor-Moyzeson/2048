@@ -134,7 +134,13 @@ namespace _2048
                             {
                                 if (TilesPositions[targetCell, i] == null && TilesPositions[currentCell, i] != null)
                                 {
+                                    
                                     TilesPositions[targetCell, i] = TilesPositions[currentCell, i];
+                                    TilesPositions[currentCell, i].TargetPosition = ScreenPositions[targetCell, i];
+                                    TilesPositions[currentCell, i].StartingPosition = ScreenPositions[currentCell, i];
+
+                                    TilesPositions[currentCell, i].HowFarAlongTheLerpYouAre = 0;
+
                                     TilesPositions[currentCell, i] = null;
 
                                 }
@@ -185,6 +191,11 @@ namespace _2048
                                 if (TilesPositions[targetCell, i] == null && TilesPositions[currentCell, i] != null)
                                 {
                                     TilesPositions[targetCell, i] = TilesPositions[currentCell, i];
+                                    TilesPositions[currentCell, i].TargetPosition = ScreenPositions[targetCell, i];
+                                    TilesPositions[currentCell, i].StartingPosition = ScreenPositions[currentCell, i];
+
+                                    TilesPositions[currentCell, i].HowFarAlongTheLerpYouAre = 0;
+
                                     TilesPositions[currentCell, i] = null;
 
                                 }
@@ -234,8 +245,13 @@ namespace _2048
                                 if (TilesPositions[i, targetCell] == null && TilesPositions[i, currentCell] != null)
                                 {
                                     TilesPositions[i, targetCell] = TilesPositions[i, currentCell];
+                                    TilesPositions[i, currentCell].TargetPosition = ScreenPositions[i, targetCell];
+                                    TilesPositions[i, currentCell].StartingPosition = ScreenPositions[i, currentCell];
+
+                                    TilesPositions[i, currentCell].HowFarAlongTheLerpYouAre = 0;
+
                                     TilesPositions[i, currentCell] = null;
-                                    
+
                                 }
                                 currentCell++;
                             }
@@ -283,8 +299,12 @@ namespace _2048
                                 if (TilesPositions[i, targetCell] == null && TilesPositions[i, currentCell] != null)
                                 {
                                     TilesPositions[i, targetCell] = TilesPositions[i, currentCell];
+                                    TilesPositions[i, currentCell].TargetPosition = ScreenPositions[i, targetCell];
+                                    TilesPositions[i, currentCell].StartingPosition = ScreenPositions[i, currentCell];
+
+                                    TilesPositions[i, currentCell].HowFarAlongTheLerpYouAre = 0;
+
                                     TilesPositions[i, currentCell] = null;
-                                    //targetCell++; 
                                 }
                                 currentCell--;
                             }
@@ -304,7 +324,7 @@ namespace _2048
 
             if (TilesPositions[xCord, yCord] == null)
             {
-                TilesPositions[xCord, yCord] = new Tile(Vector2.Zero, squaretexture, new Vector2(sizeOfCell.X, sizeOfCell.Y), Color.Red, 2, font);
+                TilesPositions[xCord, yCord] = new Tile(new Vector2(-10000, -10000), squaretexture, new Vector2(sizeOfCell.X, sizeOfCell.Y), Color.Red, 2, font);
             }
             else
             {
@@ -313,7 +333,7 @@ namespace _2048
                     xCord = rnd.Next(0, 4);
                     yCord = rnd.Next(0, 4);
                 }
-                TilesPositions[xCord, yCord] = new Tile(Vector2.Zero, squaretexture, new Vector2(sizeOfCell.X, sizeOfCell.Y), Color.Red, 2, font);
+                TilesPositions[xCord, yCord] = new Tile(new Vector2(-10000,-10000), squaretexture, new Vector2(sizeOfCell.X, sizeOfCell.Y), Color.Red, 2, font);
             }
             //TilesPositions[2, 2] = new Tile(Vector2.Zero, squaretexture, new Vector2(sizeOfCell.X, sizeOfCell.Y), Color.Red, 2);
             //TilesPositions[3, 2] = new Tile(Vector2.Zero, squaretexture, new Vector2(sizeOfCell.X, sizeOfCell.Y), Color.Red, 2);
@@ -503,7 +523,11 @@ namespace _2048
                 {
                     if (TilesPositions[i, j] != null)
                     {
-                        TilesPositions[i, j].Position = ScreenPositions[i, j];
+                        TilesPositions[i, j].Update(gameTime);
+                        if (TilesPositions[i, j].HowFarAlongTheLerpYouAre >= 1)
+                        {
+                            TilesPositions[i, j].Position = ScreenPositions[i, j];
+                        }
                     }
                 }
             }
